@@ -1,0 +1,24 @@
+<w:WizardPage x:Class="SourceCode.Wizard.PowerShell.Wizard.Pages.Finish"
+   xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" 
+              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" 
+              xmlns:w="clr-namespace:SourceCode.Workflow.WizardFramework;assembly=SourceCode.Workflow.WizardFramework" 
+              xmlns:controls="clr-namespace:SourceCode.Workflow.WizardFramework.Controls;assembly=SourceCode.Workflow.WizardFramework" 
+              Style="{DynamicResource WelcomeFinish}">
+
+	<w:WizardPage.TitleBarContent>Finish</w:WizardPage.TitleBarContent>
+
+	
+    <w:WizardPage.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/SourceCode.Workflow.WizardFramework, Version=4.0.0.0, Culture=neutral, PublicKeyToken=16a2c5aaaa1b130d;component/themes/WizardPage.generic.xaml" />
+                <ResourceDictionary Source="/SourceCode.Workflow.Wizards, Version=4.0.0.0, Culture=neutral, PublicKeyToken=16a2c5aaaa1b130d;component/Styles/Styles.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </w:WizardPage.Resources>
+    <w:WizardPage.Content>
+        <Grid Name="gridMain">
+            <Label>You are finished configuring the powershell script.</Label>
+        </Grid>
+    </w:WizardPage.Content>
+</w:WizardPage>

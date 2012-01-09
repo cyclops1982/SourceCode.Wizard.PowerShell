@@ -1,0 +1,26 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SourceCode.Wizard.PowerShell.Design", "SourceCode.Wizards.PowerShell\DesignProject\SourceCode.Wizard.PowerShell.Design.csproj", "{C14DBC0F-5356-4D70-9D66-FAA2A83BBE14}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SourceCode.Wizard.PowerShell.Wizard", "SourceCode.Wizards.PowerShell\WizardProject\SourceCode.Wizard.PowerShell.Wizard.csproj", "{735A1F3E-9E6B-48BE-BFE3-51716CE9F8AE}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{C14DBC0F-5356-4D70-9D66-FAA2A83BBE14}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C14DBC0F-5356-4D70-9D66-FAA2A83BBE14}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C14DBC0F-5356-4D70-9D66-FAA2A83BBE14}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C14DBC0F-5356-4D70-9D66-FAA2A83BBE14}.Release|Any CPU.Build.0 = Release|Any CPU
+		{735A1F3E-9E6B-48BE-BFE3-51716CE9F8AE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{735A1F3E-9E6B-48BE-BFE3-51716CE9F8AE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{735A1F3E-9E6B-48BE-BFE3-51716CE9F8AE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{735A1F3E-9E6B-48BE-BFE3-51716CE9F8AE}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
