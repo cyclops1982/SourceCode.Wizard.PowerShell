@@ -25,7 +25,7 @@ namespace SourceCode.Wizard.PowerShell.Wizard
 
         public PowerShellPropertyWizard()
         {
-            base.Definition = new SourceCode.Wizard.PowerShell.Design.PowerShellWizardDefinition();
+            base.Definition = new SourceCode.Wizard.PowerShell.Design.PowerShellPropertyWizardDefinition();
         }
 
         public override void Initialize(WizardInitializeArgs e)
