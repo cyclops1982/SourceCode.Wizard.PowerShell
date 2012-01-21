@@ -576,6 +576,8 @@ namespace SourceCode.Wizard.PowerShell.Design
                     string msg = string.Format("{0} was not found! You need to have PowerShell installed!", fullPath);
                     throw new ApplicationException(msg);
                 }
+
+                refs.Add(fullPath);
                 return refs.ToArray();
             }
         }
