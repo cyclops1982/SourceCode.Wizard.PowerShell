@@ -558,26 +558,7 @@ namespace SourceCode.Wizard.PowerShell.Design
             get
             {
                 List<string> refs = new List<string>();
-                string progFiles = System.Environment.GetEnvironmentVariable("ProgramFiles(x86)");
-                if (string.IsNullOrEmpty(progFiles)) {
-                    progFiles = System.Environment.GetEnvironmentVariable("ProgramFiles");
-                }
-
-                if (string.IsNullOrEmpty(progFiles))
-                {
-                    string msg = string.Format("We really don't expect this. So please report this magic string: WHY YOU NO PROGRAM FILES?");
-                    throw new ApplicationException(msg);
-                }
-
-                // F**k Path.Combine, because it does not work for the below!
-                string fullPath = string.Concat(progFiles, "\\Reference Assemblies\\Microsoft\\WindowsPowerShell\\v1.0\\System.Management.Automation.dll");
-                if (!File.Exists(fullPath))
-                {
-                    string msg = string.Format("{0} was not found! You need to have PowerShell installed!", fullPath);
-                    throw new ApplicationException(msg);
-                }
-
-                refs.Add(fullPath);
+                refs.Add("System.Management.Automation");
                 return refs.ToArray();
             }
         }
