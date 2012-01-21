@@ -30,7 +30,7 @@ namespace SourceCode.Wizard.PowerShell.Design
         {
             get
             {
-                return new K2Image(Resources.powershell);
+                return new K2Image(Resources.powershell_small);
             }
         }
     }

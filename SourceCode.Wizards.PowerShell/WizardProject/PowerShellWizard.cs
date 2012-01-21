@@ -26,7 +26,7 @@ namespace SourceCode.Wizard.PowerShell.Wizard
     [ConfigurationName("PowerShell Wizard")]
     [DisplayName("SourceCode.Wizard.PowerShell.Wizard.Properties.Resources", "PowerShellWizardName", typeof(PowerShellWizard))]
     [Description("SourceCode.Wizard.PowerShell.Wizard.Properties.Resources", "PowerShellWizardDescription", typeof(PowerShellWizard))]
-    [ToolboxBitmap(typeof(PowerShellWizard), "Resources.powershell.ico")]
+    [ToolboxBitmap(typeof(PowerShellWizard), "Resources.powershell.small.ico")]
     public class PowerShellWizard : SourceCode.Workflow.WizardFramework.Wizard
     {
 

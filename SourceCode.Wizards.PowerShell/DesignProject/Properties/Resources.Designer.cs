@@ -60,9 +60,16 @@ namespace SourceCode.Wizard.PowerShell.Design.Properties {
             }
         }
         
-        internal static System.Drawing.Icon powershell {
+        internal static System.Drawing.Icon powershell_large {
             get {
-                object obj = ResourceManager.GetObject("powershell", resourceCulture);
+                object obj = ResourceManager.GetObject("powershell_large", resourceCulture);
+                return ((System.Drawing.Icon)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Icon powershell_small {
+            get {
+                object obj = ResourceManager.GetObject("powershell_small", resourceCulture);
                 return ((System.Drawing.Icon)(obj));
             }
         }
