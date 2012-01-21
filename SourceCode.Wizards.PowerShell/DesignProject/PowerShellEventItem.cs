@@ -525,7 +525,7 @@ namespace SourceCode.Wizard.PowerShell.Design
             {
                 if (base.Extender.CodeFiles.Count == 0)
                 {
-                    using (CodeFileResolver resolver = new CodeFileResolver(base.Extender, @"SourceCode.Wizard.PowerShell.SourceCode.Wizard.PowerShellEventItem\EventItem"))
+                    using (CodeFileResolver resolver = new CodeFileResolver(base.Extender, @"SourceCode.Wizard.PowerShellEventItem\EventItem"))
                     {
                         string genFile = string.Empty;
                         foreach (CodeFile codeFile in resolver.GetCodeFilesFromDisk())

@@ -91,7 +91,7 @@
     <Compile Include="VariableItemCollection.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="CodeExtender\1033\SourceCode.Wizard.PowerShell.SourceCode.Wizard.PowerShellEventItem\EventItem\@safeitemname@.cs" />
+    <None Include="CodeExtender\1033\SourceCode.Wizard.PowerShellEventItem\EventItem\%40safeitemname%40.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Key.snk" />

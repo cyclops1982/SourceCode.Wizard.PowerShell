@@ -11,6 +11,8 @@ using SourceCode.Workflow.WizardFramework;
 using SourceCode.Workflow.WizardFramework.Controls;
 using SourceCode.Workflow.VisualDesigners.WizardHost;
 
+using System.Management.Automation;
+
 using SourceCode.Wizard.PowerShell.Design;
 
 namespace SourceCode.Wizard.PowerShell.Wizard.Pages
@@ -45,15 +47,26 @@ namespace SourceCode.Wizard.PowerShell.Wizard.Pages
         //validate that all required information has been entered into relevant areas
         protected override bool OnValidate()
         {
-
+            HideK2Error(txtPowerShellScript);
             if (txtPowerShellScript.IsEmpty)
             {
                 ShowK2Error(txtPowerShellScript, "Please enter a PowerShell Script");
                 return false;
             }
-            else
+
+            try
             {
-                HideK2Error(txtPowerShellScript);
+                ScriptBlock sb = ScriptBlock.Create(txtPowerShellScript.K2Field.Text);
+            }
+            catch (ParseException ex)
+            {
+                ShowK2Error(txtPowerShellScript, string.Concat("Parse Exception:", Environment.NewLine, ex.Message));
+                return false;
+            }
+            catch (Exception ex)
+            {
+                ShowK2Error(txtPowerShellScript, string.Concat("We tried to parse the script using a ScriptBlock, but this gave us an exception:", Environment.NewLine, ex.Message, Environment.NewLine, ex.StackTrace));
+                return false;
             }
 
 
