@@ -1,0 +1,73 @@
+<w:WizardPage x:Class="SourceCode.Wizard.PowerShell.Wizard.Pages.Scripts"
+    xmlns ="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:w="clr-namespace:SourceCode.Workflow.WizardFramework;assembly=SourceCode.Workflow.WizardFramework" 
+    xmlns:my="clr-namespace:System;assembly=mscorlib"
+	xmlns:controls="clr-namespace:SourceCode.Workflow.WizardFramework.Controls;assembly=SourceCode.Workflow.WizardFramework"
+    IsTitleBarVisible="True" IsInfoBarVisible="True">
+
+    <w:WizardPage.TitleBarContent>Scripts</w:WizardPage.TitleBarContent>
+    <w:WizardPage.InfoBarContent>Use this dialog to create (new) and edit scripts, add files, remove scripts/files and order them.</w:WizardPage.InfoBarContent>
+
+
+
+    <w:WizardPage.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/SourceCode.Workflow.WizardFramework, Version=4.0.0.0, Culture=neutral, PublicKeyToken=16a2c5aaaa1b130d;component/themes/WizardPage.generic.xaml" />
+                <ResourceDictionary Source="/SourceCode.Workflow.Wizards, Version=4.0.0.0, Culture=neutral, PublicKeyToken=16a2c5aaaa1b130d;component/Styles/Styles.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </w:WizardPage.Resources>
+
+    <w:WizardPage.Content>
+        <Grid Name="gridMain">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="30"></RowDefinition>
+                <RowDefinition Height="*"></RowDefinition>
+            </Grid.RowDefinitions>
+
+            <controls:K2Ribbon Grid.Row="0" Grid.Column="0" Width="530">
+                <controls:K2RibbonItem Name="newRibbonButton" Header="New" Click="newRibbonItem_Click" />
+                <controls:K2RibbonItem Name="assignRibbonButton" Header="Edit" Click="assignRibbonItem_Click" />
+                <controls:K2RibbonSeperator/>
+                <controls:K2RibbonItem Name="addRibbonButton" Header="Add file" Click="addRibbonItem_Click" />
+                <controls:K2RibbonSeperator/>
+                <controls:K2RibbonItem Name="removeRibbonButton" Header="Remove" Click="removeRibbonItem_Click" />
+                <controls:K2RibbonItem Name="removeAllRibbonButton" Header="Remove All" Click="removeAllRibbonItem_Click" />
+                <controls:K2RibbonSeperator/>
+                <controls:K2RibbonItem Name="moveUpRibbonButton" Header="Move up" Click="moveUpRibbonItem_Click" />
+                <controls:K2RibbonItem Name="moveDownRibbonButton" Header="Move down" Click="moveDownAllRibbonItem_Click" />
+
+            </controls:K2Ribbon>
+
+            <ListView
+                Grid.Column="0"
+                Grid.Row="1"
+
+                Name="lvVariables"
+                ItemsSource="{Binding Path=ListItems}" 
+                ScrollViewer.CanContentScroll="True"
+                ScrollViewer.VerticalScrollBarVisibility="Visible"
+                ScrollViewer.HorizontalScrollBarVisibility="Auto"
+                SelectionChanged="lvVariables_SelectionChanged"
+                MouseDoubleClick="lvVariables_MouseDoubleClick"
+                HorizontalAlignment="Center"
+                AllowDrop="False"
+                SelectionMode="Single"
+                TabIndex="1"
+                Width="530" >
+                <ListView.View>
+                    <GridView>
+                        <GridViewColumn Header="Type" x:Name="colVariableName" DisplayMemberBinding="{Binding Path=Name}" Width="250"/>
+                        <GridViewColumn Header="Script"  x:Name="colVariableValue" Width="230" />
+                    </GridView>
+                </ListView.View>
+            </ListView>
+        </Grid>
+    </w:WizardPage.Content>
+
+</w:WizardPage>

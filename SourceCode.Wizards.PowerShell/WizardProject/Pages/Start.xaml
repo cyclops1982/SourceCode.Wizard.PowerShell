@@ -21,8 +21,28 @@
 
 
     <w:WizardPage.Content>
-        <Grid Name="gridMain">
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition ColumnDefinition.Width="*" />
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="18"/>
+                <RowDefinition Height="*" />
+                <RowDefinition Height="21" />
+            </Grid.RowDefinitions>
+            <TextBlock Name="A" Grid.Column="0" Grid.Row="0" TextWrapping="Wrap">
+                This wizard allows you to run a Windows PowerShell script.
+            </TextBlock>
+            <TextBlock Name="B" Grid.Column="0" Grid.Row="1" TextWrapping="Wrap">
+                Advanced mode allows you to run multiple scripts and/or point to a script on a filesystem somewhere.
+            </TextBlock>
+
+            <CheckBox Name="chkRunAdvancedMode" Grid.Column="0" Grid.Row="2" IsChecked="False" TabIndex="0" Control.VerticalContentAlignment="Center">
+                Run this wizard in Advanced Mode
+            </CheckBox>
         </Grid>
+
+
     </w:WizardPage.Content>
 
 </w:WizardPage>

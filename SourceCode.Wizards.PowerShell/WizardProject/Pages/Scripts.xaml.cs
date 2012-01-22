@@ -15,14 +15,28 @@ using SourceCode.Wizard.PowerShell.Design;
 
 namespace SourceCode.Wizard.PowerShell.Wizard.Pages
 {
-    public partial class Start : WizardPage
+    public partial class Scripts : WizardPage
     {
-        public Start()
+        private ScriptItemCollection _scriptItems;
+
+
+        public Scripts(PowerShellEvent theEvent)
+            : base(theEvent)
         {
             InitializeComponent();
+
+            _scriptItems = theEvent.EventItem.ScriptItems;
         }
 
-
-
+        protected override bool OnValidate()
+        {
+            if (_scriptItems.Count == 0)
+            {
+                ShowK2Error(lvVariables, "You need to specify at least one script!");
+                return false;
+            }
+ 
+            return true;
+        }
     }
 }

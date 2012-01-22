@@ -55,7 +55,7 @@
     <Reference Include="UIAutomationProvider" />
     <Reference Include="UIAutomationTypes" />
     <Reference Include="ReachFramework" />
-	<Reference Include="System.Management.Automation" />
+    <Reference Include="System.Management.Automation" />
     <Reference Include="SourceCode.Framework, Version=4.0.0.0, Culture=neutral, PublicKeyToken=16a2c5aaaa1b130d, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
     </Reference>
@@ -85,6 +85,9 @@
     </Compile>
     <Compile Include="Pages\InputVariables.cs" />
     <Compile Include="Pages\OutputVariables.cs" />
+    <Compile Include="Pages\Scripts.xaml.cs">
+      <DependentUpon>Scripts.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Pages\Variables.xaml.cs">
       <DependentUpon>Variables.xaml</DependentUpon>
     </Compile>
@@ -96,9 +99,6 @@
     </Compile>
     <Compile Include="Pages\Finish.xaml.cs">
       <DependentUpon>Finish.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Pages\PowerShellScript.xaml.cs">
-      <DependentUpon>PowerShellScript.xaml</DependentUpon>
     </Compile>
     <Compile Include="Pages\Start.xaml.cs">
       <DependentUpon>Start.xaml</DependentUpon>
@@ -128,15 +128,15 @@
       <SubType>Form</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Pages\Scripts.xaml">
+      <SubType>Form</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Pages\Variables.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Pages\Finish.xaml">
-      <SubType>Form</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Pages\PowerShellScript.xaml">
       <SubType>Form</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

@@ -24,12 +24,12 @@ namespace SourceCode.Wizard.PowerShell.Design
 {
     public class PowerShellEventItem : EventItem
     {
-        private const string POWERSHELLSCRIPT = "PowerShellScript";
         private const string INPUTVARIABLES = "InputVariables";
         private const string OUTPUTVARIABLES = "OutputVariables";
-        private K2Field _powerShellScript;
+        private const string SCRIPTS = "ScriptItems";
         private VariableItemCollection _outputVariables;
         private VariableItemCollection _inputVariables;
+        private ScriptItemCollection _scriptItems;
 
 
         public PowerShellEventItem()
@@ -38,22 +38,21 @@ namespace SourceCode.Wizard.PowerShell.Design
             base.Extender = new CodeExtender();
         }
 
-        public K2Field PowerShellScript
+        public ScriptItemCollection ScriptItems
         {
             get
             {
-                if (_powerShellScript == null)
+                if (_scriptItems == null)
                 {
-                    _powerShellScript = new K2Field(this);
+                    _scriptItems = new ScriptItemCollection(this);
                 }
-                return _powerShellScript;
+                return _scriptItems;
             }
             set
             {
-                base.OnNotifyPropertyChanged(POWERSHELLSCRIPT, ref _powerShellScript, value);
+                base.OnNotifyPropertyChanged(SCRIPTS, ref _scriptItems, value);
             }
         }
-
 
         public VariableItemCollection InputVariables
         {
@@ -90,28 +89,15 @@ namespace SourceCode.Wizard.PowerShell.Design
 
         #region Override Methods
 
-        //TODO: Remove?
-        protected override void Dispose(bool disposing)
-        {
-            if (base.IsDisposed)
-            {
-                return;
-            }
-
-            //Set pointer = null
-            //_myK2Field1 = null;
-
-            base.Dispose(disposing);
-        }
-
 
         protected override void OnLoad(ISerializationInfo content)
         {
             base.OnLoad(content);
 
-            if (content.HasProperty(POWERSHELLSCRIPT))
+            if (content.HasProperty(SCRIPTS))
             {
-                PowerShellScript = (K2Field)content.GetPropertyAsPersistableObject(POWERSHELLSCRIPT);
+                ScriptItems.Clear();
+                content.GetListProperty(SCRIPTS, ScriptItems);
             }
 
             if (content.HasProperty(INPUTVARIABLES))
@@ -132,9 +118,9 @@ namespace SourceCode.Wizard.PowerShell.Design
         {
             base.OnSave(content);
 
-            if (!K2Field.IsNullOrEmpty(_powerShellScript))
+            if (_scriptItems != null && _scriptItems.Count > 0)
             {
-                content.SetProperty(POWERSHELLSCRIPT, _powerShellScript);
+                content.SetListProperty(SCRIPTS, _scriptItems);
             }
 
             if (_inputVariables != null && _inputVariables.Count > 0)
@@ -155,7 +141,8 @@ namespace SourceCode.Wizard.PowerShell.Design
 
             base.PrepareConfigurationForBuild();
 
-            base.Extender.Configuration[POWERSHELLSCRIPT] = Utility.CreateConfigSettingField<string>(_powerShellScript);
+            base.Extender.Configuration[SCRIPTS] = SerializeScriptItems(ScriptItems);
+            //TODO: check if we actually need this. We generate some code...
             base.Extender.Configuration[INPUTVARIABLES] = SerializeVariableList(InputVariables, INPUTVARIABLES);
             base.Extender.Configuration[OUTPUTVARIABLES] = SerializeVariableList(OutputVariables, OUTPUTVARIABLES);
 
@@ -260,11 +247,11 @@ namespace SourceCode.Wizard.PowerShell.Design
             method.Parameters.Add(k2Param);
             method.Parameters.Add(rsParam);
 
-        
+
 
             // Some variables we need
             CodeVariableReferenceExpression k2Field = new CodeVariableReferenceExpression("K2");
-            
+
 
             //Declare a object variable
             CodeVariableDeclarationStatement varValueDecl = new CodeVariableDeclarationStatement(typeof(object), "variableValue");
@@ -272,7 +259,7 @@ namespace SourceCode.Wizard.PowerShell.Design
             method.Statements.Add(varValueDecl);
 
 
-            
+
             //TODO: use getsimplfy function? Check why that is there?
             K2FieldPart part = Simplify(item.VariableValue);
             string data = ((IRuntimeDataProvider)part).GetGetRuntimeData();
@@ -294,7 +281,7 @@ namespace SourceCode.Wizard.PowerShell.Design
             method.Statements.Add(new CodeSnippetStatement("  if (variableValue != null) {"));
             method.Statements.Add(new CodeSnippetStatement(string.Format("rs.SessionStateProxy.SetVariable(\"{0}\", variableValue);", item.Name)));
             method.Statements.Add(new CodeSnippetStatement("  }"));
-       
+
 
             return method;
         }
@@ -354,7 +341,7 @@ namespace SourceCode.Wizard.PowerShell.Design
             method.Statements.Add(new CodeSnippetStatement("  if (psVariable.GetType() != destinationValue.GetType()) {"));
             method.Statements.Add(new CodeSnippetStatement("    K2.ProcessInstance.Logger.LogDebugMessage(\"PowerShellWizard\", \"Source and destination type of PowerShell Variable " + item.Name + " do not match. Doing conversion.\");"));
 
- 
+
             // Do the system.Convert.ChangeType method.         
             CodeTypeReferenceExpression systemConvert = new CodeTypeReferenceExpression("System.Convert");
             CodeMethodInvokeExpression changeTypeInvoke = new CodeMethodInvokeExpression(
@@ -403,37 +390,7 @@ namespace SourceCode.Wizard.PowerShell.Design
 
             return method;
         }
-
-        private Type ResolveTypeSupportingObject(K2Field field)
-        {
-            Type valueType;
-            if (Simplify(field) == null)
-            {
-                valueType = typeof(string);
-            }
-            else
-            {
-                valueType = Simplify(field).ValueType;
-            }
-            if (valueType == null)
-            {
-                valueType = typeof(object);
-            }
-            if (valueType.IsArray && (valueType != typeof(byte[])))
-            {
-                valueType = valueType.GetElementType();
-            }
-            if (valueType == typeof(Uri))
-            {
-                valueType = typeof(string);
-            }
-            return valueType;
-        }
-
-
-
-
-
+        
 
         private K2FieldPart Simplify(K2FieldPart fieldPart)
         {
@@ -464,6 +421,30 @@ namespace SourceCode.Wizard.PowerShell.Design
         }
 
 
+        private K2Field SerializeScriptItems(ScriptItemCollection list)
+        {
+            XmlPartWriter writer = new XmlPartWriter();
+
+            writer.WriteStartElement("ScriptItems");
+
+            if (_inputVariables != null)
+            {
+                foreach (ScriptItem item in list)
+                {
+                    writer.WriteStartElement("ScriptItem");
+                    writer.WriteAttributeValue("Type", item.Type.ToString());
+                    writer.WriteAttributeValue("ScriptContent", item.Script);
+                    writer.WriteAttributeValue("FileLocation", item.FileLocation);
+                    writer.WriteEndElement();
+                }
+            }
+
+            writer.WriteEndElement();
+
+            return new K2Field(writer.Parts);
+
+        }
+
 
         private K2Field SerializeVariableList(VariableItemCollection list, string name)
         {
@@ -490,10 +471,14 @@ namespace SourceCode.Wizard.PowerShell.Design
         public override T Clone<T>()
         {
             PowerShellEventItem item = base.Clone<PowerShellEventItem>();
-            if (!K2Field.IsNullOrEmpty(_powerShellScript))
+            if (_scriptItems != null)
             {
-                item.PowerShellScript = _powerShellScript.Clone<K2Field>();
+                foreach (ScriptItem scriptItem in _scriptItems)
+                {
+                    item.ScriptItems.Add(scriptItem.Clone<ScriptItem>());
+                }
             }
+
 
             if (_inputVariables != null)
             {
